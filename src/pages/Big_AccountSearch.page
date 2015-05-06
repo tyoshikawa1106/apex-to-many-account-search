@@ -1,0 +1,62 @@
+<apex:page standardController="Account" extensions="Big_AccountSearchController" showHeader="true" sidebar="false" tabStyle="Account" readOnly="true" id="page">
+    <apex:include pageName="Big_AccountSearchCss" />
+    <div id="vf-page">
+        <apex:form id="form">
+            <apex:pageBlock id="searchBlock">
+                <apex:pageBlockButtons location="bottom" id="searchBlockButtons">
+                    <apex:commandButton value=" 検索 " title=" 検索 " action="{!doSearch}" reRender="form" id="searchBtn" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection id="searchBlockSection">
+                    <apex:inputText value="{!Account.Name}" required="false" />
+                    <apex:inputText value="{!Account.AccountNumber}" required="false" />
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            <apex:pageBlock title="取引先一覧" id="resultBlock">
+                <apex:pageBlockSection columns="2" id="resultBlockSeciton">
+                    <apex:outputText value="{0, number, ##,###}" label="レコード件数">
+                        <apex:param value="{!recordCount}" />
+                    </apex:outputText>
+                    <apex:outputText value="※最大10000件まで表示できます" />
+                </apex:pageBlockSection>
+                <apex:pageBlockTable value="{!Accounts}" var="item">
+                    <apex:column headerValue="{!$ObjectType.Account.Fields.Name.Label}" styleClass="accountName">
+                        <apex:outputLink value="/{!item.Id}" target="_blank">
+                            <apex:outputField value="{!item.Name}" />
+                        </apex:outputLink>
+                    </apex:column>
+                    <apex:column headerValue="{!$ObjectType.Account.Fields.AccountNumber.Label}" styleClass="accountNumber">
+                        <apex:outputField value="{!item.AccountNumber}" />
+                    </apex:column>
+                    <apex:column headerValue="{!$ObjectType.Account.Fields.Industry.Label}" styleClass="accountIndustry">
+                        <apex:outputField value="{!item.Industry}" />
+                    </apex:column>
+                    <apex:column headerValue="{!$ObjectType.Account.Fields.Type.Label}">
+                        <apex:outputField value="{!item.Type}" />
+                    </apex:column>
+                </apex:pageBlockTable>
+                <!-- Pagination -->
+                <div class="paginationInfo">
+                    <apex:outputPanel id="pageInfoPanel" rendered="{!recordCount > 0}">
+                        <apex:commandButton value="|< First" title="|< First" action="{!pagesFirst}"
+                            disabled="{!Not(pagination.isPagesPrevious)}" reRender="form" />
+                        &nbsp;
+                        <apex:commandButton value="< Previous" title="< Previous" action="{!pagesPrevious}"
+                            disabled="{!Not(pagination.isPagesPrevious)}" reRender="form" />
+                        &nbsp;
+                        <apex:outputText value="Page " />
+                        <apex:outputText value="{!pagination.activePageNumber}"/>
+                        <apex:outputText value=" of " />
+                        <apex:outputText value="{!pagination.lastPageNumber}"/>
+                        &nbsp;
+                        <apex:commandButton value="Next >" title="Next >" action="{!pagesNext}"
+                            disabled="{!Not(pagination.isPagesNext)}" reRender="form" />
+                        &nbsp;
+                        <apex:commandButton value="Last >|" title="Last >|" action="{!pagesLast}"
+                            disabled="{!Not(pagination.isPagesNext)}" reRender="form" />
+                    </apex:outputPanel>
+                </div>
+            </apex:pageBlock>
+        </apex:form>
+    </div>
+    <apex:include pageName="Big_AccountSearchScript" />
+</apex:page>

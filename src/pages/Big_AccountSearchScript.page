@@ -1,0 +1,5 @@
+<apex:page >
+    <script type="text/javascript">
+        beenFocused = true;
+    </script>
+</apex:page>

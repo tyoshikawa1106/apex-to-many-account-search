@@ -1,0 +1,20 @@
+<apex:page >
+    <style type="text/css">
+        #vf-page .paginationInfo {
+            margin: 5px;
+            text-align:center;
+        }
+
+        #vf-page .accountName {
+            width: 400px;
+        }
+
+        #vf-page .accountNumber {
+            width: 150px;
+        }
+
+        #vf-page .accountIndustry {
+            width: 250px;
+        }
+    </style>
+</apex:page>
